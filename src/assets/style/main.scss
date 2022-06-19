@@ -5,6 +5,18 @@
 }
 
 .g-content-block {
-  max-width: 1200px;
+  position: relative;
+  max-width: calc(1200px + (16px * 2));
   margin: 0 auto;
+  padding: 0 16px;
+
+  &--no-padding {
+    max-width: 1200px;
+    padding: 0;
+  }
+}
+
+
+* .v-card__overlay {
+  display: none !important;
 }

@@ -3,6 +3,7 @@ const path = require('path');
 
 module.exports = defineConfig({
     transpileDependencies: true,
+
     configureWebpack: {
         resolve: {
             alias: {
@@ -11,4 +12,10 @@ module.exports = defineConfig({
             extensions: ['.js', '.vue', '.json'],
         },
     },
+
+    pluginOptions: {
+      vuetify: {
+			// https://github.com/vuetifyjs/vuetify-loader/tree/next/packages/vuetify-loader
+		}
+    }
 })
