@@ -36,22 +36,27 @@
                 <v-text-field
                     v-model="form.name"
                     :counter="160"
+                    :rules="[rules.required]"
                     label="ФИО"
                     require
                     prepend-inner-icon="mdi-account-arrow-right-outline"
                 ></v-text-field>
 
-                <v-text-field
+                <ui-input
                     v-model="form.phone"
+                    mask="+7 (###) ###-##-##"
+                    external-without-mask
+                    :rules="[rules.required, rules.phone]"
                     label="Телефон"
                     required
                     prepend-inner-icon="mdi-phone-dial-outline"
-                ></v-text-field>
+                ></ui-input>
 
                 <v-autocomplete
                     v-model="form.city"
                     v-model:search="form.cityFilter"
                     label="Город"
+                    :rules="[rules.required]"
                     :items="cities"
                     required
                     prepend-inner-icon="mdi-map-marker-radius-outline"
@@ -70,6 +75,33 @@
             </div>
         </v-card>
     </div>
+
+    <v-overlay :model-value="isComplete" class="align-center justify-center">
+        <v-card
+            class="mx-auto"
+            max-width="344"
+        >
+            <v-card-text>
+                <p class="text-h4 text--primary">
+                    Всё готово
+                </p>
+
+                <div class="text--primary">
+                    В ближайшее время с вами свяжутся наши операторы.
+                </div>
+            </v-card-text>
+
+            <v-card-actions>
+                <v-btn
+                    text
+                    color="primary"
+                    @click="close"
+                >
+                    закрыть
+                </v-btn>
+            </v-card-actions>
+        </v-card>
+    </v-overlay>
 </template>
 
 <script>
@@ -88,6 +120,8 @@ export default {
     data: () => ({
         isLoading: false,
 
+        isComplete: false,
+
         form: {
             name: '',
             phone: '',
@@ -97,7 +131,16 @@ export default {
             unlimit: false,
         },
 
-        valid: true,
+        valid: false,
+
+        rules: {
+            required: value => Boolean(value) || 'Это поле обязательно!',
+            phone: value => {
+                console.log(value);
+
+                return value.length === 18 || 'Некорректный номер телефона!'
+            },
+        },
     }),
 
     computed: {
@@ -126,6 +169,10 @@ export default {
             el.scrollIntoView({ block: 'center', behavior: 'smooth' });
         },
         async createPyrus() {
+            if (!this.valid) {
+                return;
+            }
+
             const request = {
                 username: this.form.name,
                 phone: this.form.phone,
@@ -133,9 +180,12 @@ export default {
                 product: this.selectProduct || undefined,
             }
 
-            const { data } = await api.post(`promo/pyrus/${this.$route.query.promo}`, request);
+            await api.post(`promo/pyrus/${this.$route.query.promo}`, request);
 
-            console.log(data);
+            this.isComplete = true;
+        },
+        close() {
+            this.$router.push({ name: 'main', query: null });
         },
     }
 }

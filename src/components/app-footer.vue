@@ -19,7 +19,7 @@
                 </v-btn>
             </v-card-text>
 
-            <v-card-text class="white--text pt-0">
+            <v-card-text v-if="false" class="white--text pt-0">
                 text
             </v-card-text>
 

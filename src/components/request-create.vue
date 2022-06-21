@@ -31,21 +31,23 @@
                     class="ma-4"
                 >
                     <v-text-field
-                        v-model="form.name"
+                        v-model.trim="form.name"
                         :counter="160"
-                        :rules="nameRules"
+                        :rules="[rules.required]"
                         label="ФИО"
                         require
                         prepend-inner-icon="mdi-account-arrow-right-outline"
                     ></v-text-field>
 
-                    <v-text-field
+                    <ui-input
                         v-model="form.phone"
-                        :rules="emailRules"
+                        mask="+7 (###) ###-##-##"
+                        :rules="[rules.required, rules.phone]"
+                        external-without-mask
                         label="Телефон"
                         required
                         prepend-inner-icon="mdi-phone-dial-outline"
-                    ></v-text-field>
+                    ></ui-input>
 
                     <template v-if="adminContent">
                         <div class="text-caption mx-1">Количество активаций</div>
@@ -142,6 +144,17 @@ export default {
         },
         promoId: '',
         snackbar: false,
+
+        valid: false,
+
+        rules: {
+            required: value => Boolean(value) || 'Это поле обязательно!',
+            phone: value => {
+                console.log(value);
+
+                return value.length === 18 || 'Некорректный номер телефона!'
+            },
+        },
     }),
 
     computed: {
@@ -155,6 +168,10 @@ export default {
 
     methods: {
         async createPromo() {
+            if (!this.valid) {
+                return;
+            }
+
             let request = {
                 username: this.form.name,
                 phone: this.form.phone,

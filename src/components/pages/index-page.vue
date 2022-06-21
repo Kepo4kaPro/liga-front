@@ -49,9 +49,18 @@ export default {
         this.checkCode();
     },
 
+    watch: {
+        '$route.query.promo': {
+            immediate: true,
+            handler(val) {
+                this.checkCode(val);
+            },
+        },
+    },
+
     methods: {
-        async checkCode() {
-            const code = this.$route.query.promo;
+        async checkCode(code) {
+            this.isPyrus = false;
 
             try {
                 if (code) {

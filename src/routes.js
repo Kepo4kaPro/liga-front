@@ -7,6 +7,7 @@ export default [
         meta: {
             search: true,
         },
+        name: 'main',
     },
     { path: '/pyrus', component: PyrusPage },
     { path: '/generate', component: PyrusPage },
