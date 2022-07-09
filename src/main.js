@@ -14,6 +14,11 @@ const router = createRouter({
     routes,
 });
 
+router.beforeEach((to, from, next) => {
+    document.title = to.meta.title;
+    next();
+});
+
 createApp(App)
     .use(router)
     .use(vuetify)

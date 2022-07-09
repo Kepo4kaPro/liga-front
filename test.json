@@ -1,0 +1,98 @@
+https://pyrus.com/Services/ClientServiceV2.svc/CreateExternalForm
+
+{
+    "req": {
+        "Form": {
+            "TemplateId": 1027986,
+            "Fields": [
+                {
+                    "__type": "FormFieldRadioButton:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 22,
+                    "Values": [
+                        3
+                    ]
+                },
+                {
+                    "__type": "FormFieldRadioButton:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 3,
+                    "Values": [
+                        14
+                    ]
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 35,
+                    "Text": ""
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 2,
+                    "Text": "TEST"
+                },
+                {
+                    "__type": "FormFieldCatalogItem:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 31,
+                    "Items": [
+                        {
+                            "Id": 84047562,
+                            "Values": [
+                                "1",
+                                "Абакан",
+                                "190962"
+                            ],
+                            "CatalogId": 124296,
+                            "SortOrder": 1
+                        }
+                    ]
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 6,
+                    "Text": "TEST"
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 34,
+                    "Text": "71111111111"
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 7,
+                    "Text": ""
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 32,
+                    "Text": ""
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 33,
+                    "Text": ""
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 8,
+                    "Text": ""
+                },
+                {
+                    "__type": "FormFieldString:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 11,
+                    "Text": ""
+                },
+                {
+                    "__type": "FormFieldBool:http://schemas.datacontract.org/2004/07/Papirus.BackEnd.Forms",
+                    "FieldId": 29,
+                    "Bit": true
+                }
+            ]
+        },
+        "Recaptcha": null,
+        "Locale": 1,
+        "ApiSign": "4P//9y0ndN5e",
+        "FormatVersion": 164,
+        "TimeZoneSpan": 420,
+        "SkipCounters": true,
+        "AccountId": -1
+    }
+}

@@ -69,7 +69,7 @@
                     class="w-100"
                     @click="createPyrus"
                 >
-                     Отправить заявку
+                    Отправить заявку
                 </v-btn>
             </div>
         </v-card>
@@ -107,7 +107,7 @@
 import api from '~/api.ts';
 
 export default {
-    name: 'PyrusCreate',
+    name: 'SenderPromo',
 
     props: {
         selectProduct: {

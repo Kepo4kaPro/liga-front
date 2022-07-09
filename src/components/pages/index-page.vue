@@ -9,23 +9,23 @@
             <request-steps></request-steps>
         <v-divider class="my-4 g-content-block"></v-divider>
 
-        <pyrus-create
+        <sender-promo
             v-if="isPyrus"
             :select-product="product"
-        ></pyrus-create>
+        ></sender-promo>
 
-        <request-create
+        <sender-main
             v-else
             :select-product="product"
-        ></request-create>
+        ></sender-main>
     </div>
 </template>
 
 <script>
 import ProductsContainer from '~/components/products/products-container.vue';
-import RequestCreate from '~/components/request-create.vue';
 import RequestSteps from '~/components/request-steps.vue';
-import PyrusCreate from '~/components/pyrus-create.vue';
+import SenderMain from '~/components/sender/sender-main/sender-main.vue';
+import SenderPromo from '~/components/sender/sender-promo.vue';
 
 import api from '~/api.ts';
 
@@ -34,9 +34,9 @@ export default {
 
     components: {
         ProductsContainer,
-        RequestCreate,
         RequestSteps,
-        PyrusCreate,
+        SenderMain,
+        SenderPromo,
     },
 
     data: () => ({
