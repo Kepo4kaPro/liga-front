@@ -1,21 +1,10 @@
 <template>
     <v-card
-        class="sender-friend__card sender-friend__card--form rounded-lg"
+        class="sender-friend sender-friend--form rounded-lg"
     >
         <v-card-header>
             <v-card-header-text>
                 <v-card-title class="text-h5">{{ promoId ? 'Поделится' : 'Пригласить'}}</v-card-title>
-
-                <v-card-subtitle>
-                    <v-icon
-                        icon="mdi-information-outline"
-                        size="18"
-                        color="info"
-                        class="mr-1 pb-1"
-                    ></v-icon>
-
-                    Мы зачислим вам бонус
-                </v-card-subtitle>
             </v-card-header-text>
         </v-card-header>
 
@@ -75,7 +64,7 @@
                 </template>
             </v-form>
 
-            <div class="px-4 w-100 sender-friend__card--form-btn">
+            <div class="px-4 w-100 sender-friend--form-btn">
                 <v-btn
                     flat
                     color="primary"
@@ -83,14 +72,41 @@
                     :disabled="!form.phone || !form.name"
                     @click="createPromo"
                 >
-                    Создать предложение
+                    Создать приглашение
                 </v-btn>
             </div>
         </template>
+
+        <div
+            v-else
+            class="mx-4"
+        >
+            <v-snackbar
+                v-model="snackbar"
+                timeout="1000"
+            >
+                Ссылка скопирована
+            </v-snackbar>
+
+            <v-text-field
+                ref="textToCopy"
+                :modelValue="link"
+                label="Ссылка"
+                role="button"
+                prepend-inner-icon="mdi-content-copy"
+                @click="copyLink"
+            ></v-text-field>
+
+            <ui-qr-code
+                :model-value="link"
+            ></ui-qr-code>
+        </div>
     </v-card>
 </template>
 
 <script>
+import Pyrus from '~/classes/pyrus';
+
 export default {
     name: 'SenderFriend',
 
@@ -102,6 +118,11 @@ export default {
     },
 
     data: () => ({
+        promoId: '',
+        snackbar: false,
+
+        isLoading: false,
+
         form: {
             name: '',
             phone: '',
@@ -114,63 +135,77 @@ export default {
         rules: {
             required: value => Boolean(value) || 'Это поле обязательно!',
             phone: value => {
-                console.log(value);
-
                 return value.length === 18 || 'Некорректный номер телефона!'
             },
         },
     }),
 
+    computed: {
+        adminContent() {
+            return this.$store.state.user.can('MAIN_ADMIN');
+        },
+        link() {
+            return `${window.location.origin}/?promo=${this.promoId}`;
+        },
+    },
+
     methods: {
+        async createPromo() {
+            try {
+                this.isLoading = true;
+
+                let request = {
+                    username: this.form.name,
+                    phone: this.form.phone,
+                    product: this.selectProduct || undefined,
+                }
+
+                if (this.adminContent) {
+                    request = {
+                        ...request,
+                        limit: this.form.limit,
+                        unlimit: this.form.unlimit,
+                    }
+                }
+
+                this.promoId = await Pyrus.createPromo(request);
+            }
+            finally {
+                this.isLoading = false;
+            }
+        },
+        copyLink() {
+            const textToCopy = this.$refs.textToCopy.$el.querySelector('input')
+
+            textToCopy.select()
+            document.execCommand('copy');
+            this.snackbar = true;
+        },
     },
 }
 </script>
 
 <style lang="scss">
 .sender-friend {
-    display: grid;
-    grid-gap: 16px;
-    grid-template-columns : repeat(3, 1fr);
+    background-color: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 12px 50px 2px #13507c24;
 
-    &__card {
-        background-color: #ffffff;
-        overflow: hidden;
-        box-shadow: 0 12px 50px 2px #13507c24;
+    &--form {
+        grid-column-end: span 1;
 
+        &-btn {
+            height: 50px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        min-height: 400px;
+    }
+
+    @media screen and (max-width: 959px) {
         &--form {
-            grid-column-end: span 1;
-
-            &-btn {
-                height: 50px;
-                position: absolute;
-                bottom: 0;
-            }
-        }
-
-        &--form {
-            grid-column-end: span 1;
-
-            &-btn {
-                height: 50px;
-                position: absolute;
-                bottom: 0;
-            }
-
-            min-height: 400px;
-        }
-
-        &--info {
-            grid-column-end: span 2;
-        }
-
-        @media screen and (max-width: 959px) {
-            &--info {
-                display: none;
-            }
-
-            &--form {
-                grid-column-end: span 3;
-            }
+            grid-column-end: span 3;
         }
     }
 }

@@ -9,11 +9,11 @@ export default Object.freeze([
                 label: 'Каско',
                 icon: 'mdi-shield-car',
             },
-            {
-                id: 'auto-osago',
-                label: 'Осаго',
-                icon: 'mdi-shield-car',
-            },
+            // {
+            //     id: 'auto-osago',
+            //     label: 'Осаго',
+            //     icon: 'mdi-shield-car',
+            // },
         ],
     },
     {

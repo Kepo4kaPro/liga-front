@@ -6,11 +6,11 @@ export default class User {
         this.isLogin = data.isLogin;
     }
 
-    isLogin = false;
+    isLogin: Boolean = false;
 
-    roles = [];
+    roles: Array<String> = [];
 
-    can(role) {
+    can(role: String) {
         return this.roles.includes(role);
     }
 }

@@ -13,8 +13,6 @@ export const store = createStore({
 
     mutations: {
         updateState(state, newState = {}) {
-            console.log(newState);
-
             Object.entries(newState).forEach(([key, value]) => {
                 if (key in state) {
                     state[key] = value;

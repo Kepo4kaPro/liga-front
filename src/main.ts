@@ -5,7 +5,7 @@ import { loadFonts } from './plugins/webfontloader'
 import { createWebHistory, createRouter } from "vue-router";
 import routes from './routes';
 import { store } from './vuex/index'
-import uiKit from "~/components/ui/uiKit";
+import uiKit from '~/components/ui/uiKit';
 
 loadFonts();
 
@@ -15,6 +15,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
+    // @ts-ignore
     document.title = to.meta.title;
     next();
 });

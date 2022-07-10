@@ -27,6 +27,7 @@
                         v-model="whoUser"
                         color="primary"
                         group
+                        mandatory
                     >
                         <v-btn value="self">
                             Я
@@ -39,31 +40,29 @@
                 </div>
             </v-card>
 
-            <keep-alive>
-                <sender-self
-                    v-if="whoUser === 'self'"
-                    :select-product="selectProduct"
-                ></sender-self>
+            <sender-pyrus
+                v-if="whoUser === 'self'"
+                :select-product="selectProduct"
+            ></sender-pyrus>
 
-                <sender-friend
-                    v-else-if="whoUser === 'other'"
-                    :select-product="selectProduct"
-                ></sender-friend>
-            </keep-alive>
+            <sender-friend
+                v-else-if="whoUser === 'other'"
+                :select-product="selectProduct"
+            ></sender-friend>
         </div>
     </div>
 </template>
 
 <script>
 import SenderFriend from './sender-friend.vue';
-import SenderSelf from './sender-self.vue';
+import SenderPyrus from './sender-pyrus.vue';
 
 export default {
     name: 'SenderMain',
 
     components: {
         SenderFriend,
-        SenderSelf,
+        SenderPyrus,
     },
 
     props: {
@@ -92,23 +91,6 @@ export default {
 
         &--form {
             grid-column-end: span 1;
-
-            &-btn {
-                height: 50px;
-                position: absolute;
-                bottom: 0;
-            }
-        }
-
-        &--form {
-            grid-column-end: span 1;
-
-            &-btn {
-                height: 50px;
-                position: absolute;
-                bottom: 0;
-            }
-
             min-height: 400px;
         }
 

@@ -23,6 +23,7 @@ instance.updateToken = async token => {
             localStorage.setItem('token', token);
 
             instance.interceptors.request.use(config => {
+                // @ts-ignore
                 config.headers.Authorization = token;
 
                 return config;
@@ -37,6 +38,7 @@ instance.updateToken = async token => {
 // @ts-ignore
 instance.logout = () => {
     instance.interceptors.request.use(config => {
+        // @ts-ignore
         config.headers.Authorization = '';
 
         return config;

@@ -27,7 +27,7 @@ import RequestSteps from '~/components/request-steps.vue';
 import SenderMain from '~/components/sender/sender-main/sender-main.vue';
 import SenderPromo from '~/components/sender/sender-promo.vue';
 
-import api from '~/api.ts';
+import Pyrus from '~/classes/pyrus';
 
 export default {
     name: 'IndexPage',
@@ -64,9 +64,9 @@ export default {
 
             try {
                 if (code) {
-                    const { data } = await api.get(`promo/check/${code}`);
+                    const product = await Pyrus.checkPromo(code);
 
-                    this.productRecommended = data.product || null;
+                    this.productRecommended = product || null;
                     this.isPyrus = true;
                 }
             } catch {

@@ -1,21 +1,28 @@
-import Store from '~/vuex/index.js';
+import { store } from '~/vuex';
 
 export default class Cities {
     constructor() {
-        this.loadCities();
+        this.load();
     }
 
     private _isLoading: Boolean = false;
     private _cities: Array<String> = [];
     private _filter: String = '';
 
-    private async loadCities() {
+    private async load() {
         this._isLoading = true;
 
-        await Store.dispatch('loadCities');
+        await store.dispatch('loadCities');
 
-        this._cities = Store.state.cities;
+        this._cities = store.state.cities;
         this._isLoading = false;
+    }
+
+    get filter() {
+        return this._filter;
+    }
+    set filter(val: String) {
+        this._filter = val;
     }
 
     get isLoading() {
