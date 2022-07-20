@@ -57,7 +57,7 @@ export default Object.freeze([
     },
     {
         id: 'health',
-        label: 'Здоровие',
+        label: 'Здоровье',
         icon: 'mdi-shield-account-outline',
         subcategories: [
             {

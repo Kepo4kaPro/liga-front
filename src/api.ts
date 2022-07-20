@@ -1,10 +1,10 @@
 import axios from 'axios';
 // @ts-ignore
 import User from './classes/user.ts';
-import { store } from './vuex/index'
+import { store } from './vuex/index';
 
 const instance = axios.create({
-    baseURL: 'http://localhost:5000/api',
+    baseURL: 'https://api.scm-bonus.ru/',
     timeout: 1000,
 });
 

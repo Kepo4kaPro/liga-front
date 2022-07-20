@@ -91,7 +91,7 @@
                 <v-btn
                     text
                     color="primary"
-                    @click="close"
+                    @click="$router.push('/')"
                 >
                     закрыть
                 </v-btn>
@@ -152,7 +152,7 @@ export default {
                     promo: this.$route.query.promo,
                 });
 
-                // this.isComplete = true;
+                this.isComplete = true;
             }
             finally {
                 this.isLoading = false;
