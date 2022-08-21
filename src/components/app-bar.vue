@@ -7,7 +7,7 @@
     >
         <div class="g-content-block g-content-block--no-padding w-100 d-flex align-center justify-space-between">
             <v-img
-                src="@/assets/logo_scbs.svg"
+                src="@/assets/scm-bonus.svg"
                 max-width="175"
             ></v-img>
 

@@ -1,8 +1,6 @@
 <template>
     <v-dialog
         v-model="showModal"
-        persistent
-        max-width="500px"
     >
         <v-card class="login-modal rounded-lg">
             <v-toolbar dark color="primary">
@@ -30,12 +28,6 @@
             </v-form>
 
             <v-card-actions>
-                <v-btn
-                    @click="close"
-                >
-                    Отмена
-                </v-btn>
-
                 <v-spacer></v-spacer>
 
                 <v-btn
@@ -126,7 +118,7 @@ export default {
 
 <style lang="scss">
 .login-modal {
-    width: 500px;
+    width: 400px;
 }
 
 @media screen and (max-width: 540px){

@@ -56,6 +56,10 @@
                     required
                     prepend-inner-icon="mdi-map-marker-radius-outline"
                 ></v-autocomplete>
+
+                <personal-processing
+                    v-model="form.personal"
+                ></personal-processing>
             </v-form>
         </ui-loader>
 
@@ -64,7 +68,7 @@
                 flat
                 color="primary"
                 class="w-100"
-                :disabled="!form.phone || !form.name || !form.city || isLoading"
+                :disabled="!form.phone || !form.name || !form.city || !form.personal || isLoading"
                 @click="createPyrus"
             >
                 Отправить
@@ -101,11 +105,16 @@
 </template>
 
 <script>
+import PersonalProcessing from '../personal-processing.vue';
 import Cities from '~/classes/cities.ts';
 import Pyrus from '~/classes/pyrus';
 
 export default {
     name: 'SenderPyrus',
+
+    components: {
+        PersonalProcessing,
+    },
 
     props: {
         selectProduct: {
@@ -123,6 +132,7 @@ export default {
             name: '',
             phone: '',
             city: '',
+            personal: true,
         },
 
         valid: false,

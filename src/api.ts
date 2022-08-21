@@ -4,7 +4,7 @@ import User from './classes/user.ts';
 import { store } from './vuex/index';
 
 const instance = axios.create({
-    baseURL: 'https://api.scm-bonus.ru/',
+    baseURL: 'https://scm-bonus.ru/api',
     timeout: 1000,
 });
 

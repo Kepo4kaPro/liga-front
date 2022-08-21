@@ -3,6 +3,9 @@
         <v-card
             class="sender-main__card sender-main__card--info rounded-lg"
         >
+            <v-img
+                src="@/assets/terms.png"
+            ></v-img>
         </v-card>
 
         <div class="sender-main__card--form">

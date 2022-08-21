@@ -6,22 +6,16 @@
             flat
             class="text-center app-footer__card g-content-block w-100"
         >
-            <v-card-text>
-                <v-btn
-                    v-for="link in links"
-                    :key="link.label"
-                    :href="link.to"
-                    variant="text"
-                    color="primary"
-                    target="_blank"
-                >
-                    {{ link.label }}
-                </v-btn>
-            </v-card-text>
-
-            <v-card-text v-if="false" class="white--text pt-0">
-                text
-            </v-card-text>
+            <div class="d-flex">
+                <v-img
+                    v-for="img in imgS"
+                    :key="img"
+                    :src="require(`@/assets/footer/${img}.svg`)"
+                    max-width="175"
+                    height="40"
+                    class="mr-4 my-2"
+                ></v-img>
+            </div>
 
             <v-divider></v-divider>
 
@@ -37,6 +31,11 @@ export default {
     name: 'AppFooter',
 
     data: () => ({
+        imgS: [
+            'scb_s',
+            'scb_life',
+            'scb',
+        ],
         links: [
             {
                 label: 'Банк',

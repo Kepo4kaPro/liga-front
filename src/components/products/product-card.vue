@@ -1,45 +1,25 @@
 <template>
     <v-card
         class="product-card rounded-lg"
-        :class="{ 'product-card--select' : select }"
+        :class="{
+            'product-card--select' : product.select,
+            'product-card--transparent': product.background,
+        }"
         type="button"
     >
-<!--        <v-img-->
-<!--            src="@/assets/img/auto.jpg"-->
-<!--            cover-->
-<!--            gradient="rgba(255, 255, 255, .85), rgba(255, 255, 255, .85)"-->
-<!--            class="product-card__img"-->
-<!--        >-->
-<!--            <v-list-item two-line>-->
-<!--                <v-list-item-content>-->
-<!--                    <v-card-title class="pa-0"> {{ label }} </v-card-title>-->
-
-<!--                    <v-list-item-subtitle>-->
-<!--                        <li-->
-<!--                            v-for="(category, index) in subcategories"-->
-<!--                            :key="index"-->
-<!--                        >-->
-<!--                            {{ category.label }}-->
-<!--                        </li>-->
-<!--                    </v-list-item-subtitle>-->
-<!--                </v-list-item-content>-->
-<!--            </v-list-item>-->
-
-<!--            <div class="product-card__icon">-->
-<!--                <v-icon-->
-<!--                >-->
-<!--                    {{ icon }}-->
-<!--                </v-icon>-->
-<!--            </div>-->
-<!--        </v-img>-->
+        <v-img
+            v-if="product.background"
+            :src="require(`@/assets/img/${product.background}.png`)"
+            cover
+        ></v-img>
 
         <v-list-item two-line>
             <v-list-item-content>
                 <v-card-title class="pa-0">
-                    {{ label }}
+                    {{ product.label }}
 
                     <v-chip
-                        v-if="recommended"
+                        v-if="product.recommended"
                         class="mx-2"
                         color="orange"
                         label
@@ -52,20 +32,25 @@
 
                 <v-list-item-subtitle>
                     <li
-                        v-for="(category, index) in subcategories"
+                        v-for="(category, index) in product.subcategories"
                         :key="index"
                     >
                         {{ category.label }}
                     </li>
+
+                    <span> {{ product.description }} </span>
                 </v-list-item-subtitle>
             </v-list-item-content>
         </v-list-item>
 
-        <div class="product-card__icon">
+        <div
+            v-if="product.icon"
+            class="product-card__icon"
+        >
             <v-icon
-                :color="select ? 'primary' : ''"
+                :color="product.select ? 'primary' : ''"
             >
-                {{ select ? 'mdi-shield-check-outline' : icon }}
+                {{ select ? 'mdi-shield-check-outline' : product.icon }}
             </v-icon>
         </div>
     </v-card>
@@ -76,27 +61,11 @@ export default {
     name: 'productCard',
 
     props: {
-        label: {
-            type: String,
-            default: '',
+        product: {
+            type: Object,
+            default: () => ({}),
         },
-        icon: {
-            type: String,
-            default: '',
-        },
-        subcategories: {
-            type: Array,
-            default: () => ([]),
-        },
-        select: {
-            type: Boolean,
-            default: false,
-        },
-        recommended: {
-            type: Boolean,
-            default: false,
-        },
-    }
+    },
 }
 </script>
 
@@ -109,13 +78,30 @@ $fillColor: #f2f2f4;
     position: relative;
     $this: &;
     width: 100%;
-    height: 200px;
     overflow: hidden;
     transition: background-color $transitionSpeed $transitionSpeed / 5;
     box-shadow: 0 12px 50px 2px #13507c24;
 
+    @media screen and (max-width: 600px) {
+        height: calc(100vw / (1 * 1.69));
+    }
+
+    @media screen and (min-width: 600px) and (max-width: 960px) {
+        height: calc(100vw / (2 * 1.69));
+    }
+
+    @media screen and (min-width: 960px) and (max-width: 1200px) {
+        height: calc(100vw / (3 * 1.69));
+    }
+
+    @media screen and (min-width: 1201px){
+        height: 240px;
+    }
+
     &--select {
         border: solid 1px #0a68ff;
+        grid-row: 1;
+        grid-column-end: span 12 !important;
     }
 
     &__img {
@@ -126,6 +112,10 @@ $fillColor: #f2f2f4;
     &--select {
         // box-shadow: 0 0 8px rgba(0,0,0,.2);
         background-color: $fillColor;
+    }
+
+    &--transparent {
+        background-color: transparent;
     }
 
     &__icon {

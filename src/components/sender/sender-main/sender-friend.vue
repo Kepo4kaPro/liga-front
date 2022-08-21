@@ -62,6 +62,10 @@
                         label="Безлимитно"
                     ></v-switch>
                 </template>
+
+                <personal-processing
+                    v-model="form.personal"
+                ></personal-processing>
             </v-form>
 
             <div class="px-4 w-100 sender-friend--form-btn">
@@ -69,7 +73,7 @@
                     flat
                     color="primary"
                     class="w-100"
-                    :disabled="!form.phone || !form.name"
+                    :disabled="!form.phone || !form.name || !form.personal"
                     @click="createPromo"
                 >
                     Создать приглашение
@@ -105,10 +109,15 @@
 </template>
 
 <script>
+import PersonalProcessing from '../personal-processing.vue';
 import Pyrus from '~/classes/pyrus';
 
 export default {
     name: 'SenderFriend',
+
+    components: {
+        PersonalProcessing,
+    },
 
     props: {
         selectProduct: {
@@ -128,6 +137,7 @@ export default {
             phone: '',
             limit: 1,
             unlimit: false,
+            personal: true,
         },
 
         valid: false,

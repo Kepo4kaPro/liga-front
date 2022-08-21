@@ -46,6 +46,8 @@ export default {
     }),
 
     mounted() {
+        this.product = this.$route.query.product;
+
         this.checkCode();
     },
 

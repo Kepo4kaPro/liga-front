@@ -30,15 +30,23 @@
             </div>
         </div>
 
+        <template v-if="selectProduct">
+            <product-card
+                :product="selectProduct"
+            ></product-card>
+
+            <v-divider
+                v-if="otherProducts.length"
+                class="my-4"
+            ></v-divider>
+        </template>
+
+
         <div class="products-container p-4">
             <product-card
-                v-for="product in showProducts"
+                v-for="product in otherProducts"
                 :key="product.id"
-                :icon="product.icon"
-                :label="product.label"
-                :subcategories="product.subcategories || []"
-                :select="product.select"
-                :recommended="product.recommended"
+                :product="product"
                 @click="select(product)"
             ></product-card>
         </div>
@@ -104,12 +112,18 @@ export default {
                     recommended: this.recommendedIDs.includes(product.id),
                 }));
         },
+        otherProducts() {
+            return this.showProducts.filter(item => !item.select);
+        },
+        selectProduct() {
+            return this.showProducts.find(item => item.select);
+        },
         expandedProducts() {
             return this.expandProducts(this.products);
         },
 
         isAvailableBack() {
-            return Boolean(this.activeCategory.length);
+            return Boolean(this.activeCategory.length || this.activeProduct);
         },
         isAvailableSearch() {
             return this.$store.state.isSearchOpen;
@@ -139,7 +153,10 @@ export default {
         },
         activeProduct: {
             deep: true,
-            handler() {
+            handler(val) {
+                if (val) {
+                    this.scrollToProducts();
+                }
                 this.routerUpdate();
             },
         },
@@ -157,6 +174,10 @@ export default {
                 this.activeCategory = val?.split('$$') || [];
             },
         },
+    },
+
+    created() {
+        this.oldActiveCategory = this.activeCategory;
     },
 
     methods: {
@@ -188,7 +209,7 @@ export default {
         routerUpdate({
             product = this.activeProduct,
             category = this.activeCategory,
-            oldCategory = [],
+            oldCategory = this.oldActiveCategory,
         } = {}) {
             this.$router.replace({
                 query: {
@@ -196,7 +217,7 @@ export default {
                     category: category.length
                         ? category.join('$$')
                         : undefined,
-                    product: product && category.length > oldCategory.length
+                    product: product && category.length === oldCategory.length
                         ? product
                         : undefined
                 }
@@ -267,10 +288,10 @@ $transitionSpeed: .226s;
             grid-column-end: span 4;
         }
 
-        & *:nth-child(1),
-        & *:nth-child(2) {
-            grid-column-end: span 6;
-        }
+        //& *:nth-child(1),
+        //& *:nth-child(2) {
+        //    grid-column-end: span 6;
+        //}
     }
 
     &__navigation {
